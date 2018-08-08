@@ -1,0 +1,23 @@
+{
+	"name": "stringjuice",
+	"version": "1.0.0",
+	"description": "Juice up your JavaScript string utility belt with StringJuice! 🥤 ",
+	"main": "index.js",
+	"author": "Glenn Crownover",
+	"homepage": "https://github.com/bluejava/stringjuice",
+	"keywords": [
+		"string",
+		"processing",
+		"parsing",
+		"utility",
+		"functional",
+		"FP"
+	],
+	"scripts": {
+		"test": "tarsy test"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"tarsy": "^0.5.2"
+	}
+}
