@@ -140,7 +140,7 @@ function stringjuice(o)
 	function extract(s, re)
 	{
 		const match = s.match(re),
-			hasCapture = re.toString().contains(/[^\\]\(/)
+			hasCapture = contains(re.toString(), /[^\\]\(/)
 		if(match)
 			return hasCapture ? match[1] : match[0]
 		return null
