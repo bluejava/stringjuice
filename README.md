@@ -6,7 +6,7 @@ Juice up your JavaScript string utility belt with StringJuice
 
 StringJuice is a small, well tested set of string utilities to aid in parsing, formatting and manipulating strings. These utilities can help you build more sophisticated string processing routines quickly and reliably.
 
-It also converts the standard String methods to FP-style functions.
+You can either extend the String prototype, or use a utility object FP style functions. If you prefer the later, it also converts the standard String methods to FP-style functions.
 
 ## Primary Motivation
 
@@ -44,17 +44,22 @@ Yikes! Lets see the same functions once juiced up with **StringJuice**:
 "trout mask".contains("mask", 5)      // true
 
 // Test if string contains regexp after position 5
-// hmmm.. no method seems to directly support this.. so...
 "trout mask".contains(/m..k/, 5)      // true
 ```
 
-### Support both methods on strings and/or a function programming
+All 4 tests use same method and same format - No trip to MDN required!
+
+### Support both methods on strings and/or functional programming style
+
+Note: The FP style uses the same function names and supports the same exact arguments, you simply then must pass in the string to operate on as an additional funcation call:
 
 ```javascript
 "abba zaba".findAll(/.a/)
 // or
 Sj.findAll(/.a/)("abba zaba")
 ```
+
+i.e. each method becomes a partial function, which makes it super useful for functional programming.
 
 It even FP-ifies the standard string methods! Read more about OO vs FP styles below.
 
