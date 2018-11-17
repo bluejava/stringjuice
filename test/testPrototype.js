@@ -10,6 +10,22 @@ section("String Prototype Augmentation Style", () => {
 		assert.equal(s.find(/b....t/), -1)
 	})
 
+	test("findAll", () => {
+		const result = "a1b1 a5b6 a2b9".findAll(/a(.)b(.)/)
+		assert.equal(result.length, 3)
+		assert.equal(result[0].index, 0)
+		assert.equal(result[0].match, "a1b1")
+		assert.equal(result[0].capt.length, 2)
+		assert.equal(result[0].capt[0], "1")
+		assert.equal(result[0].capt[1], "1")
+
+		assert.equal(result[1].index, 5)
+		assert.equal(result[1].capt[1], "6")
+
+		assert.equal(result[2].index, 10)
+		assert.equal(result[2].match, "a2b9")
+	})
+
 	test("contains", () => {
 		assert.equal(s.contains('that'), true)
 		assert.equal(s.contains('those'), false)

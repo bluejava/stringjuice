@@ -34,7 +34,7 @@ function stringjuice(o)
 				ret = [ ] //  to be returned
 			while(next)
 			{
-				ret.push({ index: next.index, match: next[0] })
+				ret.push({ index: next.index, match: next[0], capt: next.slice(1) })
 				next = str.exec(s)
 			}
 		}

@@ -8,11 +8,61 @@ StringJuice is a small, well tested set of string utilities to aid in parsing, f
 
 You can either extend the String prototype, or use a utility object FP style functions. If you prefer the later, it also converts the standard String methods to FP-style functions.
 
+## Summary by Example:
+
+Most examples below use string s: `"To be or not to be, that is an odd question"`.
+
+Note: These examples are using the extended String prototype form, but these can be written in FP style as well.
+
+
+                            s.find('be') = 3
+                         s.find(/b...t/) = 16
+                      s.contains('that') = true
+                     s.contains('those') = false
+                    s.contains(/b[c-f]/) = true
+                    s.contains(/t[c-f]/) = false
+                              s.first(4) = 'To b'
+                               s.last(3) = 'ion'
+                            s.rmFirst(3) = 'be or not to be, that is an odd question'
+                             s.rmLast(3) = 'To be or not to be, that is an odd quest'
+                          s.upTo('that') = 'To be or not to be, '
+                           s.upTo(/q|x/) = 'To be or not to be, that is an odd '
+                         s.after('that') = ' is an odd question'
+                         s.upToLast('b') = 'To be or not to '
+                       s.upToLast(/b|q/) = 'To be or not to be, that is an odd '
+                        s.afterLast('q') = 'uestion'
+                      s.afterLast(/foo/) = null
+                       s.extract(/,.*q/) = ', that is an odd q'
+             s.extract(/(\w*) question/) = 'odd'
+                               s.isNum() = false
+                          '1.23'.isNum() = true
+                         '1.23f'.isNum() = false
+                               s.isInt() = false
+                          '1.23'.isInt() = false
+                           '123'.isInt() = true
+                          '-123'.isInt() = true
+                         '2-123'.isInt() = false
+                             s.trunc(10) = 'To be or n'
+                       s.trunc(10, true) = 'To be or …'
+                          'test'.pad(10) = 'test      '
+                           '123'.pad(10) = '       123'
+                 'test'.pad(10, 'right') = '      test'
+                   '123'.pad(10, 'left') = '123       '
+                     'test'.pad(10, '-') = 'test------'
+                     '4500'.pad(10, '0') = '0000004500'
+                  'hi'.pad(10, 'center') = '    hi    '
+    "a1b1 a5b6 a2b9".findAll(/a(.)b(.)/) = [{"index":0,"match":"a1b1","capt":["1","1"]},{"index":5,"match":"a5b6","capt":["5","6"]},{"index":10,"match":"a2b9","capt":["2","9"]}]
+                       s.pad(60, 'full') = 'To   be   or   not   to   be,  that   is  an   odd  question'
+                          s.forceLen(10) = 'To be or n'
+                       'hi'.forceLen(10) = 'hi        '
+                       '30'.forceLen(10) = '        30'
+         '100'.forceLen(10, 'left', '-') = '100-------'
+
 ## Primary Motivation
 
 The primary motivation for writing this library was to accomplish the following:
 
-### Remove inconsistencies between matching operations using strings vs using regular expressions. 
+### Goal 1: Remove inconsistencies between matching operations using strings vs using regular expressions.
 
 Standard String methods:
 
@@ -49,14 +99,14 @@ Yikes! Lets see the same functions once juiced up with **StringJuice**:
 
 All 4 tests use same method and same format - No trip to MDN required!
 
-### Support both methods on strings and/or functional programming style
+### Goal 2: Support both methods on strings and/or functional programming style
 
-Note: The FP style uses the same function names and supports the same exact arguments, you simply then must pass in the string to operate on as an additional funcation call:
+Note: The FP style uses the same function names and supports the same exact arguments. But instead of calling them as a method on the string object, you call the function directly, and it returns a function that you then call with the string object:
 
 ```javascript
-"abba zaba".findAll(/.a/)
+"abba zaba".findAll(/.a/) // String prototype extension style
 // or
-Sj.findAll(/.a/)("abba zaba")
+Sj.findAll(/.a/)("abba zaba") // FP style
 ```
 
 i.e. each method becomes a partial function, which makes it super useful for functional programming.
@@ -219,10 +269,11 @@ str.contains(/\W/)       // true (a whitespace does exist in string)
 
 `{string|RegExp}str → {[object]}results`
 
-Returns an array containing all matches found against the String or RegExp `str`. When used with a String, the `results` array is an array of integers where matches were found. When used with RegExp, each item in the `results` array contains:
+Returns an array containing all matches found against the String or RegExp `str`. When used with a String, the `results` array is an array of integers where matches were found. When used with RegExp, `results` is an array of objects with each containing:
 
 - `index` - the index within the string at which the match was found
-- `match` - the matched string (useful when matching with RegExp)
+- `match` - the fully matched string
+- `capt` - an array of captured values from capturing groups
 
 To everyone who's tried to do this using standard String and/or RegExp methods: you're welcome. 😉
 
@@ -385,7 +436,7 @@ str.upTo(/[wxyz]/,-1)   // 'hello'
 ```
 
 ### `upToLast`
-	
+
 
 `{string|RegExp}str, {integer}[adjust] → {string}result`
 

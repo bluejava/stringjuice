@@ -1,6 +1,6 @@
 {
 	"name": "stringjuice",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"description": "Juice up your JavaScript string utility belt with StringJuice! 🥤 ",
 	"main": "index.js",
 	"author": "Glenn Crownover",

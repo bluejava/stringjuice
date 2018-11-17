@@ -5,7 +5,7 @@ require("./index")()
 const log = console.log
 const s = "To be or not to be, that is an odd question"
 const SQ = "'"
-const quote = s => SQ + s + SQ
+const quote = s => JSON.stringify(s)
 const tlog = (t,a) => console.log(t.pad(50), "= " + a)
 // find : returns the first instance of the string or regexp specified.
 console.log("Most examples use string s: " + quote(s))
@@ -72,6 +72,8 @@ const examples =
 		"'hi'.pad(10, 'center')",
 		"s.pad(60, 'full')",
 
+		"\"a1b1 a5b6 a2b9\".findAll(/a(.)b(.)/)",
+
 		"s.forceLen(10)",
 		"'hi'.forceLen(10)",
 		"'30'.forceLen(10)",
@@ -79,8 +81,8 @@ const examples =
 	]
 
 examples.forEach(example => {
-		let result = eval(example)
-		if(typeof result === "string")
-			result = quote(result)
+		let result = eval(`JSON.stringify(${example})`)
+		// if(typeof result === "string")
+		// 	result = quote(result)
 		console.log(example.pad(40, "right"), "= " + result)
 	})
